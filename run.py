@@ -1,9 +1,12 @@
-import time
+import time, json
 import RPi.GPIO as GPIO
 
-pins = [11, 13, 15]
-pwm = [0, 0, 0]
-freq = [5, 7, 9]
+with open("./pins.json") as configFile:
+	config = json.load(configFile)
+	pins = config["pins"]
+	freq = config["frequency"]
+
+pwm = [None] * 3
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
@@ -12,7 +15,7 @@ print("Start")
 try:
 	for pin in range(len(pins)):
 		GPIO.setup(pins[pin], GPIO.OUT)
-		pwm[pin] = GPIO.PWM(pins[pin], freq[pin])
+		pwm[pin] = GPIO.PWM(pins[pin], freq)
 		pwm[pin].start(1)
 	while(True):
 		time.sleep(1)
