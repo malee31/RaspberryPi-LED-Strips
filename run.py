@@ -13,10 +13,11 @@ GPIO.setwarnings(False)
 print("Start")
 
 try:
+	duty = 1;
 	for pin in range(len(pins)):
 		GPIO.setup(pins[pin], GPIO.OUT)
 		pwm[pin] = GPIO.PWM(pins[pin], freq)
-		pwm[pin].start(1)
+		pwm[pin].start(10)
 	while(True):
 		time.sleep(1)
 except:
